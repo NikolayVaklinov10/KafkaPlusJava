@@ -34,6 +34,9 @@ public class ProducerDemoKeys {
             // create a producer record
             ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key,value);
 
+            logger.info("Key: " + key); // log the key
+
+
             // send data
             producer.send(record, new Callback() {
                 public void onCompletion(RecordMetadata recordMetadata, Exception e) {

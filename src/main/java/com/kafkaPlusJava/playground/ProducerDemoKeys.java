@@ -6,10 +6,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
+import java.util.concurrent.ExecutionException;
 
 public class ProducerDemoKeys {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
 
         final Logger logger = LoggerFactory.getLogger(ProducerDemoKeys.class);
 
@@ -28,9 +29,10 @@ public class ProducerDemoKeys {
 
             String topic = "first_topic";
             String value = "hello world" + Integer.toString(i);
+            String key = "id_" + Integer.toString(i);
 
             // create a producer record
-            ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, value);
+            ProducerRecord<String, String> record = new ProducerRecord<String, String>(topic, key,value);
 
             // send data
             producer.send(record, new Callback() {
@@ -48,7 +50,7 @@ public class ProducerDemoKeys {
                         logger.error("Error while producing", e);
                     }
                 }
-            });
+            }).get(); // block the .send() to make it synchronous - don't do this in production!
         }
 
         // flush data

@@ -11,6 +11,7 @@ public class ProducerDemo {
 
     public static void main(String[] args) {
 
+        // the http address for the bootstrap server
         String bootstrapServers = "127.0.0.1:9092";
 
         // THE FOLLOWING 3 STEPS TO MAKE A PRODUCER
